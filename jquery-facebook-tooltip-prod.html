@@ -1,0 +1,156 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+ <head>
+  <title>jQuery Tooltips facebook like</title>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <script type="text/javascript" src="jcfbtooltip.js"></script>
+  <link href="styles.css" rel="stylesheet">
+    </head>
+
+    <body>
+      <div class="container" style="margin:300px">
+      
+
+         
+           
+<div class="hero-unit">
+        <h2 class="blue">Demo for jcfbtooltip</h2><br>
+        <p><a class="btn btn-primary btn-large" href="http://jaspreetchahal.org/jquery-facebook-big-tooltip-plugin">&laquo; Go back to original article</a></p>
+      </div>
+      <div align="center">
+      <div id='testid' style='display:none'><div class="tooltip-title">Title</div><div class="tooltip-content">Hello I am tooltip content!</div></div>
+
+      <a href="javascript:void(0)" id="tooltipfiretop"  jchtml='<div class="tooltip-title">Title</div><div class="tooltip-content">Hello I am tooltip content!</div>' jccontent='testid'>Hover on me  [Top tooltip 300x200]</a>
+
+      <br><br>
+      <br><br>
+
+      <a href="javascript:void(0)" id="tooltipfireleft"  jchtml='<div class="tooltip-title">Title</div><div class="tooltip-content">Hello I am tooltip content!</div>' jccontent='testid'>Hover on me  [Left tooltip]</a>
+
+      <br><br>
+      <br><br>
+
+      <a href="javascript:void(0)" id="tooltipfirebottom"  jchtml='<div class="tooltip-title">Title</div><div class="tooltip-content">Hello I am tooltip content!</div>' jccontent='testid'>Hover on me [Bottom tooltip]</a>
+      <br><br><br><select><option>Testing hover</option></select>
+
+
+      <br>
+      <br><br>
+      <a href="javascript:void(0)" id="tooltipfireright"  jchtml='<div class="tooltip-title">Title</div><div class="tooltip-content">Hello I am tooltip content!</div>' jccontent='testid'>Hover on me [Right tooltip 150x60]</a>
+<br><br>
+    
+    </div>
+     
+       
+       <script type="text/javascript">
+       jQuery.fn.jcfbtooltip = function(settings) {
+          settings = jQuery.extend({
+            delay:500,
+            width:250,
+            height:120,
+            offset:0,
+            position:'bottom' // auto | left | right | top | bottom
+          },settings);
+          var stooltipid = "jcapp-"+jQuery(this).attr('id');
+          console.log(stooltipid)
+          jQuery("<div id='"+stooltipid+"' class='jcfbtooltip'><div class='arrow-west'></div></div>").appendTo("body");
+          jQuery("#"+stooltipid).css({width:settings.width+'px',height:settings.height+'px'});
+
+
+          if(jQuery(this).attr('jchtml') != undefined && jQuery(this).attr('jchtml').length > 0) {
+              jQuery("#"+stooltipid).append(jQuery(this).attr('jchtml'));
+          }
+          else if(jQuery(this).attr('jccontent') != undefined) {
+             // jQuery("#"+stooltipid).append(jQuery('#'+jQuery(this).attr('jccontent')).html()); 
+          }          
+
+
+          var markup = '';
+          var original_position = settings.position;
+
+          var triangleWidth = function(cls) {
+            return (parseFloat(jQuery("#"+stooltipid+" div."+cls).css('borderLeftWidth')) || parseFloat(jQuery("#"+stooltipid+" div."+cls).css('borderRightWidth')) || parseFloat(jQuery("#"+stooltipid+" div."+cls).css('borderTopWidth'))  || parseFloat(jQuery("#"+stooltipid+" div."+cls).css('borderBottomWidth')));
+          };
+          var clearAddClass = function(cls) {
+              jQuery("#"+stooltipid+' div:first-child').removeClass('arrow-east arrow-top arrow-west arrow-bottom').addClass(cls);
+              var border =  triangleWidth(cls);
+              return (2*border); // multiply by 2 because we want full border width
+          };
+          // Todo: auto reposition on window resize
+          var reposition = function(cObj) {
+                settings.position = original_position;
+                // Todo: Partially completed
+                
+                var position = cObj.position();
+                var hover_element_height = cObj.outerHeight();
+                var hover_element_width = cObj.outerWidth();
+                var borderWidth = 0; 
+                tpos = position.top+'px';
+                if(settings.position == 'left') {
+                    borderWidth = clearAddClass('arrow-east');   
+                    lpos = (position.left - tooltip_width - borderWidth - settings.offset)+'px';    
+                    jQuery("#"+stooltipid+' div.arrow-east').css({left:'100%'});          
+                }          
+                if(settings.position == 'right') {
+                    borderWidth = clearAddClass('arrow-west');    
+                    lpos = (position.left +  hover_element_width + borderWidth + settings.offset)+'px';  
+                    jQuery("#"+stooltipid+' div.arrow-west').css({right:'100%'});
+                }          
+                if(settings.position == 'top') {
+                    borderWidth = clearAddClass('arrow-top');    
+                    tpos = (position.top - tooltip_height - settings.offset + hover_element_height)+'px';              
+                    lpos = (position.left + hover_element_width/2 - tooltip_width/2)+'px';         
+                    jQuery("#"+stooltipid+' div.arrow-top').css({left:((tooltip_width/2)-borderWidth/2)+'px',bottom: ((-1)*borderWidth)+'px'});
+                }          
+                if(settings.position == 'bottom') {
+                    borderWidth = clearAddClass('arrow-bottom');    
+                    tpos = (position.top + hover_element_height + 30 + borderWidth)+'px';              
+                    lpos = (position.left + hover_element_width/2 - tooltip_width/2)+'px';         
+                    // reposition our triangle
+                    jQuery("#"+stooltipid+' div.arrow-bottom').css({left:((tooltip_width/2)-borderWidth/2)+'px',top: ((-1)*borderWidth)+'px'});
+                }
+          };
+          
+          jQuery(this).css({cursor:'pointer'});  
+
+          
+          var tpos = 0;
+          var lpos = 0; 
+          
+          /*auto detection in case tooltip goes outside the window*/  
+          
+          
+          var tooltip_width = jQuery("#"+stooltipid).outerWidth();
+          var tooltip_height = jQuery("#"+stooltipid).outerHeight();
+              
+         
+          var timeout = 0;
+          jQuery(this).mouseenter(function(){
+              reposition(jQuery(this));
+              jQuery("#"+stooltipid).css({top:tpos,left:lpos});
+              timeout = setTimeout(function() {jQuery("#"+stooltipid).show();}, settings.delay);  
+
+          }).mouseleave(function(){
+              timeout = setTimeout(function() {jQuery("#"+stooltipid).hide();}, settings.delay);  
+          });
+          jQuery("#"+stooltipid).mouseenter(function(){
+              clearTimeout(timeout);
+              reposition(jQuery(this));
+          }).mouseleave(function(){
+             timeout = setTimeout(function() {jQuery("#"+stooltipid).hide();}, settings.delay);  
+          });
+        }
+       jQuery(document).ready(function(){
+           jQuery("#tooltipfiretop").jcfbtooltip({position:'top',width:300,height:200});
+           jQuery("#tooltipfireleft").jcfbtooltip({position:'left'});
+           jQuery("#tooltipfireright").jcfbtooltip({position:'right',width:150,height:60});
+           jQuery("#tooltipfirebottom").jcfbtooltip({position:'bottom'});
+       });     
+            
+       </script>
+
+      
+     </div>
+    </body>
+</html>
+

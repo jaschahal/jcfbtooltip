@@ -1,0 +1,120 @@
+.jcfbtooltip {
+      background: white;
+      border: 1px solid #666;
+      border: 1px solid rgba(0, 0, 0, .5);
+      border-bottom: 1px solid #666;
+      -moz-box-shadow: 0 3px 8px rgba(0, 0, 0, .4);
+      -webkit-box-shadow: 0 3px 8px rgba(0, 0, 0, .4);
+      box-shadow: 0 3px 8px rgba(0, 0, 0, .3);
+      position: absolute;
+      left:0;
+      right:0;
+      padding: 0px;
+      width:250px;
+      height:120px;
+      display: none;
+      margin-top:-35px;
+      z-index: 10000;
+    }
+    .arrow-east,.arrow-east:after,.arrow-west,.arrow-west:before,.arrow-top,.arrow-top:before,.arrow-bottom,.arrow-bottom:before {
+      position: absolute; 
+      width: 0; 
+      height: 0; 
+      line-height: 0;       
+    }
+    .arrow-east {
+      border: 15px dashed #666; 
+      border-bottom-color: #000; 
+      right: -15px; 
+      top: 30px; 
+      border-left-style: solid; 
+      border-right:none; 
+      border-top-color: transparent; 
+      border-bottom-color: transparent;
+    }
+    .arrow-east:after {
+         content:'';
+          border: 15px dashed #fff; 
+          right: 1px; 
+          top: -15px; /*this need to be done to offset other half of border*/
+          border-left-style: solid; 
+          border-right: none; 
+          border-top-color: transparent; 
+          border-bottom-color: transparent;
+   }
+   .arrow-west {
+      border: 15px dashed #666; 
+      border-bottom-color: #000; 
+      left: -15px; 
+      top: 30px; 
+      border-right-style: solid; 
+      border-left:none; 
+      border-left-color: transparent; 
+      border-top-color: transparent; 
+      border-bottom-color: transparent;
+    }
+    .arrow-west:before {
+         content:'';
+          border: 14px dashed #fff; 
+          top: -14px; 
+          left:1px;
+          border-right-style: solid; 
+          border-left: none; 
+          border-left-color: transparent; 
+          border-top-color: transparent; 
+          border-bottom-color: transparent;
+   } 
+   .arrow-top {
+      border: 15px dashed #666; 
+      border-top-color: #000; 
+      border-top-style: solid;
+      border-left-color:transparent; 
+      border-bottom-color: transparent; 
+      border-right-color: transparent;
+    }
+    .arrow-top:before {
+        content:'';
+        border: 14px dashed #fff; 
+        top: -15px; 
+        left:-14px;
+        border-top-style: solid; 
+        border-left-color:transparent; 
+        border-bottom-color: transparent; 
+        border-right-color: transparent;
+   }
+   .arrow-bottom {
+      border: 15px dashed #6D84B4; 
+      border-bottom-color: #6D84B4; 
+      border-bottom-style: solid; 
+      border-left-color:transparent; 
+      border-top-color: transparent; 
+      border-right-color: transparent;
+    }
+    .arrow-bottom:before { /*not used as such because of the background color in header.*/
+        content:'';
+        border: 14px dashed #6D84B4; 
+        top: -13px; 
+        left:-14px;
+        border-bottom-style: solid; 
+        border-left-color:transparent; 
+        border-top-color: transparent; 
+        border-right-color: transparent;
+   }    
+   .tooltip-title {
+      padding:5px;
+      font-family: calibri;
+      font-size:14px;
+      font-weight: bold;
+      background: #6D84B4;
+      color:white;
+      margin:0;      
+   }
+   .tooltip-content {
+      padding:5px;
+      font-family: calibri;
+      font-size:12px;
+   }
+   a:hover {
+    text-decoration: none;
+    color: #C00;
+   }
